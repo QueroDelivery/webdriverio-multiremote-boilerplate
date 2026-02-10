@@ -10,6 +10,7 @@ const DEFAULTS = {
   ANDROID_PLATFORM_VERSION: '14',
   IOS_DEVICE_NAME: 'iPhone 12',
   IOS_PLATFORM_VERSION: '14.5',
+  APP_PATH: './apps/android.wdio.native.app.v2.0.0.apk',
 } as const;
 
 export function getBaseUrl(kind?: 'BACKEND_URL' | 'FRONTEND_URL'): string {
@@ -36,4 +37,8 @@ export function getIOSDeviceName(): string {
 
 export function getIOSPlatformVersion(): string {
   return process.env.IOS_PLATFORM_VERSION ?? DEFAULTS.IOS_PLATFORM_VERSION;
+}
+
+export function getAppPath(): string {
+  return process.env.APP_PATH ?? DEFAULTS.APP_PATH;
 }

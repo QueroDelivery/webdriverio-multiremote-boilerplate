@@ -1,8 +1,8 @@
-import { join } from 'node:path'
+import { getAppPath, getIOSDeviceName, getIOSPlatformVersion } from 'lib/env'
+
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { config } = require('./wdio.shared.conf')
 
-const iOSAppPath = join(process.cwd(), './apps/ios.wdio.native.app.v1.0.8.app')
 const headless = process.argv.includes('--headless')
 
 const browserOptions = {
@@ -28,10 +28,14 @@ const browserCap = {
     'goog:chromeOptions': browserOptions,
 }
 
+const iOSAppPath = getAppPath();
+const iOSDeviceName = getIOSDeviceName();
+const iOSPlatformVersion = getIOSPlatformVersion();
+
 const iOSCap = {
     'appium:platformName': 'iOS',
-    'appium:deviceName': 'iPhone 11 Pro',
-    'appium:platformVersion': '15.2',
+    'appium:deviceName': iOSDeviceName,
+    'appium:platformVersion': iOSPlatformVersion,
     'appium:automationName': 'XCUITest',
     'appium:orientation': 'PORTRAIT',
     'appium:app': iOSAppPath,

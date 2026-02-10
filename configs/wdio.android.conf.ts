@@ -1,8 +1,8 @@
-import { join } from 'node:path'
+import { getAndroidDeviceName, getAndroidPlatformVersion, getAppPath } from 'lib/env';
+
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { config } = require('./wdio.shared.conf')
 
-const androidAppPath = join(process.cwd(), './apps/android.wdio.native.app.v1.0.8.apk')
 const headless = process.argv.includes('--headless')
 
 const browserOptions = {
@@ -28,12 +28,16 @@ const browserCap = {
     'goog:chromeOptions': browserOptions,
 }
 
+const androidAppPath = getAppPath();
+const androidDeviceName = getAndroidDeviceName();
+const androidPlatformVersion = getAndroidPlatformVersion();
+
 const androidCap = {
     'appium:platformName': 'Android',
     'appium:automationName': 'UiAutomator2',
     'appium:orientation': 'PORTRAIT',
-    'appium:deviceName': 'Medium_Phone_API_36',
-    'appium:platformVersion': '16',
+    'appium:deviceName': androidDeviceName,
+    'appium:platformVersion': androidPlatformVersion,
     'appium:app': androidAppPath,
     'appium:appWaitActivity': '*',
     'appium:noReset': true,
