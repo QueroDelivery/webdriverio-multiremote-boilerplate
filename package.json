@@ -23,12 +23,11 @@
     "@wdio/spec-reporter": "^9.23.3",
     "appium": "^3.2.0",
     "appium-uiautomator2-driver": "^6.8.0",
-    "chromedriver": "^145.0.1",
+    "chromedriver": "^144.0.0",
     "dotenv": "^17.2.4",
     "eslint": "^9.39.2",
     "semantic-release": "^25.0.3",
     "typescript": "^5.9.3",
-    "wdio-chromedriver-service": "^8.1.1",
-    "webdriverio": "^9.23.3"
+    "wdio-chromedriver-service": "^8.1.1"
   }
 }
