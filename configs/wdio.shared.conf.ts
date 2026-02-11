@@ -2,7 +2,7 @@
 import 'dotenv/config'
 import { getBaseUrl } from 'lib/env';
 import { getDeviceFromCapabilities } from 'lib/Utils';
-import { PACKAGE_NAME } from 'test-data/Constants';
+import { BUNDLE_ID, PACKAGE_NAME } from 'test-data/Constants';
 
 exports.config = {
     //
@@ -184,16 +184,30 @@ exports.config = {
             });
           }
 
-          const isAppInstalled = await emulator.isAppInstalled(PACKAGE_NAME);
+          const appIdentifier = emulator.isAndroid ? PACKAGE_NAME : BUNDLE_ID;
+          const appPayload = {
+            [emulator.isAndroid ? 'appId' : 'bundleId']: appIdentifier,
+          };
+
+          const isAppInstalled = await emulator.isAppInstalled(
+            emulator.isAndroid ? appIdentifier : undefined,
+            emulator.isAndroid ? undefined : appIdentifier,
+          );
           console.info('APP INSTALLED: ', isAppInstalled);
 
-          const appState = await emulator.queryAppState(PACKAGE_NAME);
+          const appState = await emulator.queryAppState(
+            emulator.isAndroid ? appIdentifier : undefined,
+            emulator.isAndroid ? undefined : appIdentifier,
+          );
 
           if (appState > 1) {
-            await emulator.terminateApp(PACKAGE_NAME, { appId: PACKAGE_NAME });
+            await emulator.execute('mobile: terminateApp', appPayload);
           }
 
-          await emulator.activateApp(PACKAGE_NAME);
+          await emulator.execute(
+            emulator.isAndroid ? 'mobile: activateApp' : 'mobile: launchApp',
+            appPayload,
+          );
     },
     /**
    * Runs before a WebdriverIO command gets executed.
