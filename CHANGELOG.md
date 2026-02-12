@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/QueroDelivery/webdriverio-multiremote-boilerplate/compare/v1.0.0...v1.1.0) (2026-02-12)
+
+
+### Bug Fixes
+
+* **config:** preserve base services in iOS and CI-local wdio configs ([ef92243](https://github.com/QueroDelivery/webdriverio-multiremote-boilerplate/commit/ef922436a0fd78bf25f3b7de32449e75413c06b6))
+
+
+### Features
+
+* integrate @wdio/shared-store-service for cross-test data sharing ([7c35c6c](https://github.com/QueroDelivery/webdriverio-multiremote-boilerplate/commit/7c35c6c1146c7f8293fd52cb062e85b2908d4b92))
+* integrate Allure reporting for enhanced test reporting ([b0a1809](https://github.com/QueroDelivery/webdriverio-multiremote-boilerplate/commit/b0a1809d9bde37acd2bf0ddd6eae9800252d68b3))
+
 # 1.0.0 (2026-02-11)
 
 
