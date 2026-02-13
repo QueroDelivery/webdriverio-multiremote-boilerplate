@@ -10,7 +10,10 @@
     "test-ios": "wdio run ./configs/wdio.ios.conf.ts",
     "test-android-headless": "wdio run ./configs/wdio.android.conf.ts --headless",
     "test-ios-headless": "wdio run ./configs/wdio.ios.conf.ts --headless",
-    "test-ci-local": "wdio run ./configs/wdio.ci-local.conf.ts"
+    "test-ci-local": "wdio run ./configs/wdio.ci-local.conf.ts",
+    "test-ci-local:critical": "wdio run ./configs/wdio.ci-local.conf.ts --mochaOpts.grep=@critical",
+    "test-ci-local:login": "wdio run ./configs/wdio.ci-local.conf.ts --suite login",
+    "test-ci-local:login:critical": "wdio run ./configs/wdio.ci-local.conf.ts --suite login --mochaOpts.grep=@critical"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",

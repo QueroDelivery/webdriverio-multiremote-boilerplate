@@ -41,7 +41,7 @@ describe('Open mobile and browser instances and perform actions in both within t
         await NativeAlert.waitForIsShown(false)
     }
 
-    it('Perform login in both browser and mobile app sequentially', async () => {
+    it('Perform login in both browser and mobile app sequentially @login @web @app', async () => {
         allureReporter.addArgument('usernameBrowser', inputs.login.browser.username);
         allureReporter.addArgument('passwordBrowser', inputs.login.browser.password);
         allureReporter.addArgument('usernameApp', inputs.login.app.username);
@@ -56,7 +56,7 @@ describe('Open mobile and browser instances and perform actions in both within t
         })
     })
 
-    it('Perform login in both browser and mobile app simultaneously', async () => {
+    it('Perform login in both browser and mobile app simultaneously @login @web @app @critical', async () => {
         allureReporter.addArgument('usernameBrowser', inputs.login.browser.username);
         allureReporter.addArgument('passwordBrowser', inputs.login.browser.password);
         allureReporter.addArgument('usernameApp', inputs.login.app.username);

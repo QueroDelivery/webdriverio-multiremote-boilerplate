@@ -33,6 +33,11 @@ exports.config = {
   //
   specs: ['../test/**/*.ts'],
 
+  suites: {
+    login: ['../test/login/**/*.spec.ts'],
+    register: ['../test/register/**/*.spec.ts'],
+  },
+
   services: ['shared-store'],
   // Patterns to exclude.
   exclude: [
