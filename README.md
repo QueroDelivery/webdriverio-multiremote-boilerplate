@@ -44,11 +44,11 @@ Execute na raiz do projeto:
 ### Rodar só um fluxo
 
 ```bash
-wdio run ./configs/wdio.android.conf.ts --spec test/<fluxo>/**/*.ts
-wdio run ./configs/wdio.ios.conf.ts --spec test/<fluxo>/**/*.ts
+wdio run ./configs/wdio.android.conf.ts --spec test/<dominio>/<fluxo>/**/*.ts
+wdio run ./configs/wdio.ios.conf.ts --spec test/<dominio>/<fluxo>/**/*.ts
 ```
 
-Substitua `<fluxo>` pelo nome da pasta (ex.: `login`). Ver [docs/09-comandos-e-opcoes.md](docs/09-comandos-e-opcoes.md).
+Substitua `<dominio>` e `<fluxo>` pelo domínio e nome do fluxo (ex.: `manager`, `login`). Ver [docs/09-comandos-e-opcoes.md](docs/09-comandos-e-opcoes.md).
 
 ---
 
@@ -56,10 +56,10 @@ Substitua `<fluxo>` pelo nome da pasta (ex.: `login`). Ver [docs/09-comandos-e-o
 
 | Diretório | Papel |
 |-----------|--------|
-| **test/** | Specs por fluxo (ex.: `test/login/*.spec.ts`); um fluxo = uma pasta |
-| **test-data/** | Constantes em `Constants.ts`; dados por fluxo em `<fluxo>/inputs.json`, `messages.json` (opcional `builder.ts`) |
-| **pageobjects/** | Page Objects para páginas web (browser) |
-| **screenobjects/** | Screen Objects para telas do app nativo + `components/` |
+| **test/** | Specs por domínio e fluxo (ex.: `test/manager/login/*.spec.ts`); domínios: app-cliente, log, manager, partners |
+| **test-data/** | Constantes em `e2e/Constants.ts`; dados por domínio e fluxo em `<dominio>/<fluxo>/inputs.json`, `messages.json` (opcional `builder.ts`) |
+| **pageobjects/** | Page Objects por domínio (ex.: `pageobjects/manager/LoginPage.ts`) |
+| **screenobjects/** | Screen Objects por domínio + `components/` (ex.: `screenobjects/manager/LoginScreen.ts`) |
 | **fixtures/** | Funções reutilizáveis (ex.: `loginFixture`, `reLaunchApp`) |
 | **lib/** | `env.ts`, `data-factory.ts`, `Utils.ts` (getDeviceFromCapabilities, seletores app) |
 | **configs/** | Configurações WebdriverIO (shared, android, ios, sauce) |
@@ -89,8 +89,8 @@ Skills em [.cursor/skills/qa/](.cursor/skills/qa/). Ver [AGENTS.md](AGENTS.md).
 
 ## Checklist: novo fluxo
 
-1. Criar pasta em `test/<fluxo>/` (ex.: `test/login/`).
-2. Se houver dados: criar `test-data/<fluxo>/` com `inputs.json` (e opcional `messages.json`, `builder.ts`).
+1. Criar pasta em `test/<dominio>/<fluxo>/` (ex.: `test/manager/login/`).
+2. Se houver dados: criar `test-data/<dominio>/<fluxo>/` com `inputs.json` (e opcional `messages.json`, `builder.ts`).
 3. Escrever specs: importar `expect` de `@wdio/globals`, usar `lib/Utils` e Page/Screen Objects.
 4. Se outro baseURL ou app: configurar em [configs/](configs/) ou [docs/08-ambiente-e-configuração.md](docs/08-ambiente-e-configuração.md).
 
@@ -100,7 +100,7 @@ Ver [docs/07-como-adicionar-novo-fluxo.md](docs/07-como-adicionar-novo-fluxo.md)
 
 ## Checklist: novo teste
 
-- Arquivo em `test/<fluxo>/` com extensão `.ts` (ex.: `test/login/login.spec.ts`).
+- Arquivo em `test/<dominio>/<fluxo>/` com extensão `.ts` (ex.: `test/manager/login/login.spec.ts`).
 - Importar `expect` de `@wdio/globals`; usar `getDeviceFromCapabilities('browser')` ou `getDeviceFromCapabilities('mobile')` de `lib/Utils` (ou Page/Screen Objects).
 - Dados em `test-data` quando houver inputs reutilizáveis.
 - Nome descritivo e Arrange-Act-Assert.
