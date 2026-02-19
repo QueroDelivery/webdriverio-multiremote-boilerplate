@@ -6,7 +6,7 @@ No contexto deste projeto WebdriverIO, **fixtures** são funções reutilizávei
 
 **Arquivo:** `fixtures/index.ts`
 
-- **reLaunchApp(emulator)**: recebe a instância do dispositivo/emulador (WebdriverIO). Encerra e reabre o app usando os identificadores em `test-data/Constants` (BUNDLE_ID para iOS, PACKAGE_NAME para Android). Útil entre cenários ou para garantir estado limpo antes de um teste.
+- **reLaunchApp(emulator)**: recebe a instância do dispositivo/emulador (WebdriverIO). Encerra e reabre o app usando os identificadores em `test-data/Constants.ts` — BUNDLE_ID para iOS, PACKAGE_NAME para Android. Útil entre cenários ou para garantir estado limpo antes de um teste.
 
 Uso nos specs: importar de `fixtures` e chamar passando a sessão mobile (ex.: `getDeviceFromCapabilities('mobile')`).
 
@@ -24,16 +24,16 @@ Uso nos specs: importar de `fixtures` e chamar passando a sessão mobile (ex.: `
 ### Exemplo: uso de reLaunchApp no spec
 
 ```ts
-import { getDeviceFromCapabilities } from 'lib/Utils'
-import { reLaunchApp } from 'fixtures'
+import { getDeviceFromCapabilities } from 'lib/Utils';
+import { reLaunchApp } from 'fixtures';
 
 describe('Meu fluxo', () => {
-    it('reinicia o app e executa login', async () => {
-        const emulator = getDeviceFromCapabilities('mobile')
-        await reLaunchApp(emulator)
-        // ... passos de login no app
-    })
-})
+  it('reinicia o app e executa login', async () => {
+    const emulator = getDeviceFromCapabilities('mobile');
+    await reLaunchApp(emulator);
+    // ... passos de login no app
+  });
+});
 ```
 
 ### Exemplo: adicionar uma fixture de login no app
@@ -41,13 +41,13 @@ describe('Meu fluxo', () => {
 ```ts
 // fixtures/index.ts
 export async function loginFixture(browser: WebdriverIO.Browser) {
-    // Ex.: preencher campos e clicar em login; esperar home
-    const emailInput = await browser.$('~email-input')
-    const passwordInput = await browser.$('~password-input')
-    await emailInput.setValue('teste@exemplo.com')
-    await passwordInput.setValue('123456')
-    await browser.$('~login-button').click()
-    await browser.$('~home-screen').waitForDisplayed()
+  // Ex.: preencher campos e clicar em login; esperar home
+  const emailInput = await browser.$('~email-input');
+  const passwordInput = await browser.$('~password-input');
+  await emailInput.setValue('teste@exemplo.com');
+  await passwordInput.setValue('123456');
+  await browser.$('~login-button').click();
+  await browser.$('~home-screen').waitForDisplayed();
 }
 ```
 
