@@ -1,11 +1,13 @@
 {
-  "name": "qa-webdriverio",
+  "name": "webdriverio-multiremote-boilerplate",
   "version": "1.1.0",
   "description": "Automação de testes com WebdriverIO para QA",
   "license": "MIT",
   "repository": "github:QueroDelivery/webdriverio-multiremote-boilerplate",
   "scripts": {
     "build": "tsc --noEmit",
+    "eslint": "eslint .",
+    "eslint:fix": "eslint . --fix",
     "test-android": "wdio run ./configs/wdio.android.conf.ts",
     "test-ios": "wdio run ./configs/wdio.ios.conf.ts",
     "test-android-headless": "wdio run ./configs/wdio.android.conf.ts --headless",
