@@ -84,7 +84,7 @@ it('login no browser e no app em sequência', async () => {
 ```ts
 import { expect } from '@wdio/globals'
 import allureReporter from '@wdio/allure-reporter'
-import LoginPage from '../pageobjects/LoginPage'
+import LoginPage from '../../../pageobjects/manager/LoginPage'
 
 describe('Login', () => {
     beforeEach(() => {

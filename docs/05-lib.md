@@ -22,7 +22,7 @@ A pasta `lib/` concentra código usado por vários testes, Page Objects, Screen 
 - `randomEmail(domain = 'teste.qa'): string` — email no formato `qa-<8 chars>@<domain>`.
 - `randomNumber(min: number, max: number): number` — inteiro entre min e max (inclusive).
 
-**Uso:** em specs ou em builders em `test-data/<fluxo>/builder.ts` quando precisar de dados únicos (ex.: cadastro, formulário).
+**Uso:** em specs ou em builders em `test-data/<dominio>/<fluxo>/builder.ts` quando precisar de dados únicos (ex.: cadastro, formulário).
 
 **Exemplo (no spec):**
 
@@ -70,4 +70,4 @@ await reLaunchApp(mobile)
 ## Quando adicionar algo em lib
 
 - **Comportamento usado em vários fluxos ou no config**: coloque em `lib/` (ex.: novo helper de env, outro utilitário de dados).
-- **Comportamento só de um fluxo**: prefira `test-data/<fluxo>/builder.ts` ou helpers locais ao spec.
+- **Comportamento só de um fluxo**: prefira `test-data/<dominio>/<fluxo>/builder.ts` ou helpers locais ao spec.

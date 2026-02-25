@@ -13,16 +13,20 @@ projeto/
 │   ├── wdio.ios.conf.ts      # iOS + browser (multiremote)
 │   ├── wdio.ci-local.conf.ts # CI local (opcional)
 │   └── wdio.sauce.conf.ts    # Sauce Labs (opcional)
-├── test/                 # Specs (arquivos de teste) — um fluxo por pasta
-│   └── <fluxo>/          # ex.: login/ com login.spec.ts
-├── pageobjects/          # Page Objects para páginas web (browser)
-├── screenobjects/        # Screen Objects para telas do app nativo (mobile)
-│   └── components/       # Componentes reutilizáveis (ex.: TabBar, NativeAlert)
+├── test/                 # Specs (arquivos de teste) — por domínio e fluxo
+│   └── <dominio>/        # ex.: manager/, partners/
+│       └── <fluxo>/      # ex.: login/ com login.spec.ts
+├── pageobjects/          # Page Objects para web — por domínio
+│   └── <dominio>/        # ex.: manager/LoginPage.ts
+├── screenobjects/        # Screen Objects para app nativo — por domínio
+│   └── <dominio>/        # ex.: manager/LoginScreen.ts
+│       └── components/   # ex.: TabBar.ts, NativeAlert.ts
 ├── fixtures/             # Funções reutilizáveis (ex.: reLaunchApp)
 ├── lib/                  # Utilitários compartilhados (env, data-factory, Utils)
-├── test-data/            # Dados e constantes
-│   ├── Constants.ts     # Constantes globais (BUNDLE_ID, PACKAGE_NAME)
-│   └── <fluxo>/          # ex.: login/ com inputs.json, messages.json
+├── test-data/            # Dados e constantes — por domínio e fluxo
+│   ├── Constants.ts      # Constantes compartilhadas (Constants.ts)
+│   └── <dominio>/        # ex.: manager/
+│       └── <fluxo>/      # ex.: login/ com inputs.json, messages.json
 ├── apps/                 # Binários do app (APK, IPA ou placeholder)
 ├── .env.example          # Exemplo de variáveis de ambiente
 ├── package.json
@@ -45,23 +49,23 @@ projeto/
 ### `test/`
 
 - **Papel**: arquivos de teste (specs).
-- **Estrutura**: specs organizados por fluxo em `test/<fluxo>/**/*.ts` (ex.: `test/login/login.spec.ts`). O config shared usa o padrão `../test/**/*.ts`, incluindo todos os fluxos.
+- **Estrutura**: specs organizados por **domínio** e fluxo em `test/<dominio>/<fluxo>/**/*.ts` (ex.: `test/manager/login/login.spec.ts`). Domínios: app-cliente, log, manager, partners. O config shared usa o padrão `../test/**/*.ts`, incluindo todos os fluxos.
 - **Convenção**: use `describe`/`it` (Mocha); importe `expect` de `@wdio/globals`; use `getDeviceFromCapabilities('browser')` ou `getDeviceFromCapabilities('mobile')` (de `lib/Utils`) para acessar a sessão correta.
 
 ### `pageobjects/`
 
-- **Papel**: Page Object Model para páginas web (browser).
-- **Exemplos**: `Page.ts` (base), `LoginPage.ts`, `SecurePage.ts`. Acessam o browser via `getDeviceFromCapabilities('browser')` e usam seletores WebdriverIO (`$`, `$$`).
+- **Papel**: Page Object Model para páginas web (browser), organizados por domínio.
+- **Estrutura**: `pageobjects/<dominio>/` (ex.: `pageobjects/manager/LoginPage.ts`, `Page.ts` base). Acessam o browser via `getDeviceFromCapabilities('browser')` e usam seletores WebdriverIO (`$`, `$$`).
 
 ### `screenobjects/`
 
-- **Papel**: Screen Object Model para telas do app nativo (mobile).
-- **Estrutura**: telas (ex.: `LoginScreen.ts`, `HomeScreen.ts`) e `components/` (ex.: `TabBar.ts`, `NativeAlert.ts`). Usam seletores nativos (accessibility id, resource-id, etc.) via `lib/Utils` (ex.: `getElementByTestIDApp`).
+- **Papel**: Screen Object Model para telas do app nativo (mobile), organizados por domínio.
+- **Estrutura**: `screenobjects/<dominio>/` com telas (ex.: `LoginScreen.ts`, `HomeScreen.ts`) e `screenobjects/<dominio>/components/` (ex.: `TabBar.ts`, `NativeAlert.ts`). Usam seletores nativos (accessibility id, resource-id, etc.) via `lib/Utils` (ex.: `getElementByTestIDApp`).
 
 ### `fixtures/`
 
 - **Papel**: funções reutilizáveis entre testes.
-- **Arquivo principal**: `index.ts` — exporta `reLaunchApp(emulator)` (encerra e reabre o app no dispositivo/emulador, usando `test-data/Constants`). Outras funções (ex.: fluxo de login no app) podem ser adicionadas aqui.
+- **Arquivo principal**: `index.ts` — exporta `reLaunchApp(emulator)` (encerra e reabre o app no dispositivo/emulador, usando constantes de `test-data/Constants.ts` ou raiz). Outras funções (ex.: fluxo de login no app) podem ser adicionadas aqui.
 
 ### `lib/`
 
@@ -73,8 +77,8 @@ projeto/
 
 ### `test-data/`
 
-- **Papel**: dados de entrada e constantes.
-- **Estrutura**: `test-data/Constants.ts` com `BUNDLE_ID`, `PACKAGE_NAME` (usados pelo config e por `fixtures/reLaunchApp`); por fluxo, ex.: `test-data/login/inputs.json`, `messages.json`.
+- **Papel**: dados de entrada e constantes, organizados por domínio e fluxo.
+- **Estrutura**: constantes compartilhadas em `test-data/Constants.ts` com `BUNDLE_ID`, `PACKAGE_NAME` (usados pelo config e por `fixtures/reLaunchApp`); por domínio e fluxo, ex.: `test-data/manager/login/inputs.json`, `messages.json`.
 
 ### `apps/`
 
@@ -82,13 +86,13 @@ projeto/
 
 ### Raiz do projeto
 
-- **configs/wdio.*.conf.ts**: configuração do WebdriverIO; o shared é importado pelos demais.
+- **configs/wdio.\*.conf.ts**: configuração do WebdriverIO; o shared é importado pelos demais.
 - **.env.example**: lista de variáveis (ANDROID_DEVICE_NAME, IOS_DEVICE_NAME, FRONTEND_URL, etc.); copiar para `.env` e não commitar.
 - **package.json**: scripts `test-android`, `test-ios`, `test-android-headless`, `test-ios-headless`, `test-ci-local`, `build`.
 
 ## Localizar o fluxo
 
-- **Onde estão os specs?** → `test/<fluxo>/` (ex.: `test/login/`).
-- **Onde estão os dados/constantes?** → `test-data/Constants.ts` e `test-data/<fluxo>/` (ex.: `test-data/login/`).
+- **Onde estão os specs?** → `test/<dominio>/<fluxo>/` (ex.: `test/manager/login/`).
+- **Onde estão os dados/constantes?** → `test-data/Constants.ts` e `test-data/<dominio>/<fluxo>/` (ex.: `test-data/manager/login/`).
 - **Rodar Android**: `npm run test-android` ou `wdio run ./configs/wdio.android.conf.ts`.
 - **Rodar iOS**: `npm run test-ios` ou `wdio run ./configs/wdio.ios.conf.ts`.
