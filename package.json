@@ -32,7 +32,7 @@
     "@wdio/shared-store-service": "^9.24.0",
     "@wdio/spec-reporter": "^9.23.3",
     "allure-commandline": "^2.36.0",
-    "appium": "^3.2.0",
+    "appium": "^3.3.0",
     "appium-uiautomator2-driver": "^6.8.0",
     "dotenv": "^17.2.4",
     "eslint": "^9.39.2",
